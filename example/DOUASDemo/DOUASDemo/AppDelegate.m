@@ -23,17 +23,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [DOUAudioStreamer setOptions:[DOUAudioStreamer options] | DOUAudioStreamerRequireSHA256];
-
-  [self setWindow:[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]];
-
-  MainViewController *mainViewController = [[MainViewController alloc] initWithStyle:UITableViewStylePlain];
-  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
-  [[self window] setRootViewController:navigationController];
-
-  [[self window] makeKeyAndVisible];
-
-  return YES;
+    NSLog(@"%@", NSHomeDirectory());
+    [DOUAudioStreamer setOptions:DOUAudioStreamerKeepPersistentVolume | DOUAudioStreamerRequireSHA256];
+    
+    [self setWindow:[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]];
+    
+    MainViewController *mainViewController = [[MainViewController alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+    [[self window] setRootViewController:navigationController];
+    
+    [[self window] makeKeyAndVisible];
+    
+    return YES;
 }
 
 @end

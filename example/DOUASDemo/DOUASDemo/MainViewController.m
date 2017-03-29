@@ -29,58 +29,65 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return 2;
+  return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  static NSString *const kCellIdentifier = @"MainViewController_CellIdentifier";
-
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
-  if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
-  }
-
-  switch ([indexPath row]) {
-  case 0:
-    [[cell textLabel] setText:@"Remote Music"];
-    break;
-
-  case 1:
-    [[cell textLabel] setText:@"Local Music Library"];
-    break;
-
-  default:
-    abort();
-  }
-
-  return cell;
+    static NSString *const kCellIdentifier = @"MainViewController_CellIdentifier";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
+    }
+    
+    switch ([indexPath row]) {
+        case 0:
+            [[cell textLabel] setText:@"Remote Music"];
+            break;
+            
+        case 1:
+            [[cell textLabel] setText:@"Local Music Library"];
+            break;
+            
+        case 2:
+            cell.textLabel.text = @"我的测试音乐";
+            break;
+        default:
+            abort();
+    }
+    
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-  PlayerViewController *playerViewController = [[PlayerViewController alloc] init];
-  switch ([indexPath row]) {
-  case 0:
-    [playerViewController setTitle:@"Remote Music ♫"];
-    [playerViewController setTracks:[Track remoteTracks]];
-    break;
-
-  case 1:
-    [playerViewController setTitle:@"Local Music Library ♫"];
-    [playerViewController setTracks:[Track musicLibraryTracks]];
-    break;
-
-  default:
-    abort();
-  }
-
-  [[self navigationController] pushViewController:playerViewController
-                                         animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    PlayerViewController *playerViewController = [[PlayerViewController alloc] init];
+    switch ([indexPath row]) {
+        case 0:
+            [playerViewController setTitle:@"Remote Music ♫"];
+            [playerViewController setTracks:[Track remoteTracks]];
+            break;
+            
+        case 1:
+            [playerViewController setTitle:@"Local Music Library ♫"];
+            [playerViewController setTracks:[Track musicLibraryTracks]];
+            break;
+            
+        case 2:
+            playerViewController.title = @"我的测试音乐";
+            playerViewController.tracks = [Track testTracks];
+            break;
+        default:
+            abort();
+    }
+    
+    [[self navigationController] pushViewController:playerViewController
+                                           animated:YES];
 }
 
 @end

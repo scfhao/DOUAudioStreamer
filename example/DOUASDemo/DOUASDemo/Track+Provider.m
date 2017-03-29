@@ -88,4 +88,21 @@
   return tracks;
 }
 
++ (NSArray *)testTracks {
+    static NSArray *tracks = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSMutableArray *trackArray = [NSMutableArray arrayWithCapacity:41];
+        for (int i = 0; i < 41; i++) {
+            Track *track = [Track new];
+            track.artist = @"张悬";
+            track.title = [NSString stringWithFormat:@"music:%i", i];
+            track.audioFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost/Music/xuan/%i.mp3", i]];
+            [trackArray addObject:track];
+        }
+        tracks = [trackArray copy];
+    });
+    return tracks;
+}
+
 @end

@@ -20,5 +20,6 @@
 
 + (NSArray *)remoteTracks;
 + (NSArray *)musicLibraryTracks;
++ (NSArray *)testTracks;
 
 @end
