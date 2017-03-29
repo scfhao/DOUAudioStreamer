@@ -290,6 +290,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Douban Inc.";
+				TargetAttributes = {
+					D4C3891E171B9D87009D6124 = {
+						DevelopmentTeam = 5N5785R8FU;
+					};
+				};
 			};
 			buildConfigurationList = D4C3891A171B9D87009D6124 /* Build configuration list for PBXProject "DOUASDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -436,10 +441,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 5N5785R8FU;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DOUASDemo/DOUASDemo-Prefix.pch";
 				INFOPLIST_FILE = "DOUASDemo/DOUASDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.scfhao.DOUASDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -449,10 +456,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 5N5785R8FU;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DOUASDemo/DOUASDemo-Prefix.pch";
 				INFOPLIST_FILE = "DOUASDemo/DOUASDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.scfhao.DOUASDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

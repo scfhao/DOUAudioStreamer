@@ -97,7 +97,7 @@
             Track *track = [Track new];
             track.artist = @"张悬";
             track.title = [NSString stringWithFormat:@"music:%i", i];
-            track.audioFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost/Music/xuan/%i.mp3", i]];
+            track.audioFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.2.1/Music/xuan/%i.mp3", i]];
             [trackArray addObject:track];
         }
         tracks = [trackArray copy];
