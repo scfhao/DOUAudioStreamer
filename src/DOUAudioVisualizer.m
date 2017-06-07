@@ -20,9 +20,10 @@
 #import "DOUAudioStreamer.h"
 #include <Accelerate/Accelerate.h>
 
-#define kBarHeight 6.0
-#define kBarHorizontalPadding 2.0
-#define kBarVerticalPadding 1.0
+#define kBarHeight 1.0
+#define kBarHorizontalPadding 4.0
+#define kBarVerticalPadding 0.0
+#define kBarVerticalCount 4
 
 @interface DOUAudioVisualizer () {
 @private
@@ -189,7 +190,7 @@
 
   if (++_step > _stepCount) {
     _step = 0;
-    memcpy(_levels.last, _levels.current, sizeof(float) * kDOUAudioAnalyzerLevelCount);
+    memcpy(_levels.last, _levels.current, sizeof(float) * kBarVerticalCount);
     [[[self class] _sharedAnalyzer] copyLevels:_levels.current];
   }
 }
@@ -200,7 +201,7 @@
              _levels.current, 1,
              &_coefficient,
              _levels.pacing, 1,
-             kDOUAudioAnalyzerLevelCount);
+             kBarVerticalCount);
 }
 
 #pragma mark - Pre-calculation
@@ -210,13 +211,13 @@
   CGFloat width = CGRectGetWidth([self bounds]);
   CGFloat height = CGRectGetHeight([self bounds]);
 
-  _bar.width = width / kDOUAudioAnalyzerLevelCount;
+  _bar.width = width / kBarVerticalCount;
   _bar.height = kBarHeight;
   _bar.horizontalPadding = kBarHorizontalPadding;
   _bar.verticalPadding = kBarVerticalPadding;
 
-  _bar.horizontalCount = kDOUAudioAnalyzerLevelCount;
-  _bar.verticalCount = (NSUInteger)lrint(floor(height / kBarHeight));
+  _bar.horizontalCount = 4;
+  _bar.verticalCount = (NSUInteger)lrint(floor(height / kBarHeight)) * 2;
 }
 
 - (void)_updateVBO
@@ -287,8 +288,8 @@
   glGenBuffers(1, &_ibo);
 
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-  glColor4f(0.784f, 0.867f, 0.839f, 1.0f);
-
+  glColor4f(0.f, 0.631f, 0.968f, 1.0f);
+    
   glEnable(GL_BLEND);
   glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 }

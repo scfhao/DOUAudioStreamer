@@ -18,4 +18,12 @@
 
 @implementation Track
 
++ (instancetype)gkbbTrackWithTitle:(NSString *)title urlString:(NSString *)urlString {
+    Track *track = [Track new];
+    track.title = [title copy];
+    track.artist = @"高考必备";
+    track.audioFileURL = [NSURL URLWithString:urlString];
+    return track;
+}
+
 @end

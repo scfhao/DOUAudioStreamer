@@ -23,4 +23,6 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSURL *audioFileURL;
 
++ (instancetype)gkbbTrackWithTitle:(NSString *)title urlString:(NSString *)urlString;
+
 @end

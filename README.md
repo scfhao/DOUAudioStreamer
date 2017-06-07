@@ -4,6 +4,8 @@
 [![Platform](https://img.shields.io/cocoapods/p/DOUAudioStreamer.svg)](https://cocoapods.org/pods/DOUAudioStreamer)
 [![License](https://img.shields.io/cocoapods/l/DOUAudioStreamer.svg)](https://github.com/douban/DOUAudioStreamer/blob/master/LICENSE)
 
+> This repo is forked from [douban/DOUAudioStreamer](https://github.com/douban/DOUAudioStreamer), only use for test.
+
 DOUAudioStreamer is a Core Audio based streaming audio player for iOS/Mac.
 
 ## How to Use

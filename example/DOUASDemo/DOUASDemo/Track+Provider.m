@@ -19,15 +19,22 @@
 
 @implementation Track (Provider)
 
-+ (void)load
-{
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    [self remoteTracks];
-  });
-
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    [self musicLibraryTracks];
-  });
++ (void)load {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self remoteTracks];
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self musicLibraryTracks];
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self testTracks];
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self gkbbTracks];
+    });
 }
 
 + (NSArray *)remoteTracks
@@ -101,6 +108,37 @@
             [trackArray addObject:track];
         }
         tracks = [trackArray copy];
+    });
+    return tracks;
+}
+
++ (NSArray *)gkbbTracks {
+    static NSArray *tracks = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        tracks =
+        @[
+          [self gkbbTrackWithTitle:@"01-生命的追求"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/10/2015_10_1457.mp3&AudioFileID=1457&type=download&version=814&USERID=486575"],
+          [self gkbbTrackWithTitle:@"02-姚明：新式中锋"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/11/2015_11_1651.mp3&AudioFileID=1651&type=download&version=814&USERID=486575"],
+          [self gkbbTrackWithTitle:@"03-吹牛"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/11/2015_11_1654.mp3&AudioFileID=1654&type=download&version=814&USERID=486575"],
+          [self gkbbTrackWithTitle:@"04-纳米科技，超越终极想象"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/11/2015_11_1658.mp3&AudioFileID=1658&type=download&version=814&USERID=486575"],
+          [self gkbbTrackWithTitle:@"05-几米：画给大人看的漫画"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/11/2015_11_1662.mp3&AudioFileID=1662&type=download&version=814&USERID=486575"],
+          [self gkbbTrackWithTitle:@"06-双城记(节选)"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/11/2015_11_1663.mp3&AudioFileID=1663&type=download&version=814&USERID=486575"],
+          [self gkbbTrackWithTitle:@"07-诗两首"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/11/2015_11_1664.mp3&AudioFileID=1664&type=download&version=814&USERID=486575"],
+          [self gkbbTrackWithTitle:@"08-青春"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/11/2015_11_1665.mp3&AudioFileID=1665&type=download&version=814&USERID=486575"],
+          [self gkbbTrackWithTitle:@"09-大山的故事"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/11/2015_11_1666.mp3&AudioFileID=1666&type=download&version=814&USERID=486575"],
+          [self gkbbTrackWithTitle:@"10-寓言两则"
+                         urlString:@"http://www.gkbbapp.com/Support/Download.aspx?DownloadAudio=2015/11/2015_11_1667.mp3&AudioFileID=1667&type=download&version=814&USERID=486575"],
+          ];
     });
     return tracks;
 }

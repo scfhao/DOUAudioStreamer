@@ -18,74 +18,49 @@
 #import "PlayerViewController.h"
 #import "Track+Provider.h"
 
+@interface MainViewController ()
+
+@property (strong, nonatomic) NSArray *cellTitles;
+@property (strong, nonatomic) NSArray *subArrays;
+
+@end
+
 @implementation MainViewController
 
-- (void)viewDidLoad
-{
-  [self setTitle:@"DOUAudioStreamer ♫"];
+- (void)viewDidLoad {
+    [self setTitle:@"DOUAudioStreamer ♫"];
+    self.cellTitles = @[@"Remote Music", @"Local Music Library", @"我的测试音乐", @"高考必备测试音频"];
+    self.subArrays =
+    @[
+      [Track remoteTracks],
+      [Track musicLibraryTracks],
+      [Track testTracks],
+      [Track gkbbTracks]
+      ];
 }
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-  return 3;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  return self.cellTitles.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *const kCellIdentifier = @"MainViewController_CellIdentifier";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
     }
-    
-    switch ([indexPath row]) {
-        case 0:
-            [[cell textLabel] setText:@"Remote Music"];
-            break;
-            
-        case 1:
-            [[cell textLabel] setText:@"Local Music Library"];
-            break;
-            
-        case 2:
-            cell.textLabel.text = @"我的测试音乐";
-            break;
-        default:
-            abort();
-    }
-    
+    cell.textLabel.text = self.cellTitles[indexPath.row];
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     PlayerViewController *playerViewController = [[PlayerViewController alloc] init];
-    switch ([indexPath row]) {
-        case 0:
-            [playerViewController setTitle:@"Remote Music ♫"];
-            [playerViewController setTracks:[Track remoteTracks]];
-            break;
-            
-        case 1:
-            [playerViewController setTitle:@"Local Music Library ♫"];
-            [playerViewController setTracks:[Track musicLibraryTracks]];
-            break;
-            
-        case 2:
-            playerViewController.title = @"我的测试音乐";
-            playerViewController.tracks = [Track testTracks];
-            break;
-        default:
-            abort();
-    }
-    
+    playerViewController.title = self.cellTitles[indexPath.row];
+    playerViewController.tracks = self.subArrays[indexPath.row];
     [[self navigationController] pushViewController:playerViewController
                                            animated:YES];
 }

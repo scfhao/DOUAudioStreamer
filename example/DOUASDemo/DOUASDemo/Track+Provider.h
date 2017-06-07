@@ -21,5 +21,6 @@
 + (NSArray *)remoteTracks;
 + (NSArray *)musicLibraryTracks;
 + (NSArray *)testTracks;
++ (NSArray *)gkbbTracks;
 
 @end

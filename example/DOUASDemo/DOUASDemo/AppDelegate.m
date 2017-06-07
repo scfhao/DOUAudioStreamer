@@ -21,10 +21,9 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"%@", NSHomeDirectory());
-    [DOUAudioStreamer setOptions:DOUAudioStreamerKeepPersistentVolume | DOUAudioStreamerRequireSHA256];
+    [DOUAudioStreamer setOptions:DOUAudioStreamerDefaultOptions | DOUAudioStreamerRequireSHA256];
     
     [self setWindow:[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]];
     
