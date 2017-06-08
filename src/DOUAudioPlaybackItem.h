@@ -37,7 +37,7 @@
 @property (nonatomic, readonly) AudioFileID fileID;
 @property (nonatomic, readonly) AudioStreamBasicDescription fileFormat;
 @property (nonatomic, readonly) NSUInteger bitRate;
-@property (nonatomic, readonly) NSUInteger dataOffset;
+@property (nonatomic, readonly) NSUInteger dataOffset;      // 音频数据在音频文件中的偏移？
 @property (nonatomic, readonly) NSUInteger estimatedDuration;
 
 @property (nonatomic, readonly, getter=isOpened) BOOL opened;

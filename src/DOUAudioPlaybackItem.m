@@ -18,6 +18,8 @@
 #import "DOUAudioFileProvider.h"
 #import "DOUAudioFilePreprocessor.h"
 
+#import "SOAudio.h"
+
 @interface DOUAudioPlaybackItem () {
 @private
   DOUAudioFileProvider *_fileProvider;
@@ -114,7 +116,11 @@ static SInt64 audio_file_get_size(void *inClientData)
                                       NULL,
                                       fileTypeHint,
                                       &_fileID);
-
+    if (status == noErr) {
+        SODebugLog(@"使用%i类型打开成功", fileTypeHint);
+    } else {
+        SODebugLog(@"使用%i类型打开成功", fileTypeHint);
+    }
   return status == noErr;
 }
 
@@ -199,7 +205,7 @@ static SInt64 audio_file_get_size(void *inClientData)
   if ([self isOpened]) {
     return YES;
   }
-
+    SOVerboseLog(@"打开音频：%@", [self audioFile]);
   if (![self _openWithFileTypeHint:0] &&
       ![self _openWithFallbacks]) {
     _fileID = NULL;
@@ -208,11 +214,12 @@ static SInt64 audio_file_get_size(void *inClientData)
 
   if (![self _fillFileFormat] ||
       ![self _fillMiscProperties]) {
+      SOVerboseLog(@"获取属性失败");
     AudioFileClose(_fileID);
     _fileID = NULL;
     return NO;
   }
-
+    SOVerboseLog(@"音频文件打开成功");
   return YES;
 }
 
@@ -237,6 +244,7 @@ static SInt64 audio_file_get_size(void *inClientData)
 
   if (numFormats == 1) {
     _fileFormat = formatList[0].mASBD;
+      SOVerboseLog(@"获取到文件类型:%@", NSStringFromAudioStreamBasicDescription(_fileFormat));
   }
   else {
     status = AudioFormatGetPropertyInfo(kAudioFormatProperty_DecodeFormatIDs, 0, NULL, &size);
@@ -280,6 +288,7 @@ static SInt64 audio_file_get_size(void *inClientData)
     }
 
     _fileFormat = formatList[i].mASBD;
+      SOVerboseLog(@"获取到可以被解码的文件类型:%@", NSStringFromAudioStreamBasicDescription(_fileFormat));
   }
 
   free(formatList);
@@ -298,6 +307,7 @@ static SInt64 audio_file_get_size(void *inClientData)
     return NO;
   }
   _bitRate = bitRate;
+    SOVerboseLog(@"bitRate:%lu", (unsigned long)_bitRate);
 
   SInt64 dataOffset = 0;
   size = sizeof(dataOffset);
@@ -306,6 +316,7 @@ static SInt64 audio_file_get_size(void *inClientData)
     return NO;
   }
   _dataOffset = (NSUInteger)dataOffset;
+    SOVerboseLog(@"dataOffset:%lli", dataOffset);
 
   Float64 estimatedDuration = 0.0;
   size = sizeof(estimatedDuration);
@@ -314,7 +325,7 @@ static SInt64 audio_file_get_size(void *inClientData)
     return NO;
   }
   _estimatedDuration = estimatedDuration * 1000.0;
-
+    SOVerboseLog(@"预计时长：%.0fs", estimatedDuration);
   return YES;
 }
 
@@ -323,7 +334,7 @@ static SInt64 audio_file_get_size(void *inClientData)
   if (![self isOpened]) {
     return;
   }
-
+    SOVerboseLog(@"关闭音频：%@", self.audioFile);
   AudioFileClose(_fileID);
   _fileID = NULL;
 }

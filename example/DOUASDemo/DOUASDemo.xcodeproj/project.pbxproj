@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		096F5AA41EE8FC2D0091C734 /* SOAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 096F5AA31EE8FC2D0091C734 /* SOAudio.m */; };
 		D400E947171BF13F00BE7F37 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D400E946171BF13F00BE7F37 /* Accelerate.framework */; };
 		D40A255D17694680000B98AA /* DOUAudioAnalyzer+Default.m in Sources */ = {isa = PBXBuildFile; fileRef = D40A255C17694680000B98AA /* DOUAudioAnalyzer+Default.m */; };
 		D40A4D1717AB83C400D0305F /* DOUAudioStreamer+Options.m in Sources */ = {isa = PBXBuildFile; fileRef = D40A4D1617AB83C400D0305F /* DOUAudioStreamer+Options.m */; };
@@ -50,6 +51,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		096F5AA11EE8FBA50091C734 /* SOLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOLog.h; sourceTree = "<group>"; };
+		096F5AA21EE8FC2D0091C734 /* SOAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOAudio.h; sourceTree = "<group>"; };
+		096F5AA31EE8FC2D0091C734 /* SOAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOAudio.m; sourceTree = "<group>"; };
 		D400E946171BF13F00BE7F37 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		D40A255B17694680000B98AA /* DOUAudioAnalyzer+Default.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOUAudioAnalyzer+Default.h"; sourceTree = "<group>"; };
 		D40A255C17694680000B98AA /* DOUAudioAnalyzer+Default.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOUAudioAnalyzer+Default.m"; sourceTree = "<group>"; };
@@ -145,27 +149,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D43ACD731738B47B00E6A571 /* DOUAudioStreamer */ = {
+		096F5AA01EE8E4EC0091C734 /* Readed */ = {
 			isa = PBXGroup;
 			children = (
 				D47CA39E17680AC5002D73B4 /* DOUAudioBase.h */,
+				D43ACD781738B47B00E6A571 /* DOUAudioFile.h */,
+				D43ACD7D1738B47B00E6A571 /* DOUAudioLPCM.h */,
+				D43ACD7E1738B47B00E6A571 /* DOUAudioLPCM.m */,
+				D43ACD791738B47B00E6A571 /* DOUAudioFilePreprocessor.h */,
+				D43ACD7A1738B47B00E6A571 /* DOUAudioFilePreprocessor.m */,
+				D43ACD7F1738B47B00E6A571 /* DOUAudioPlaybackItem.h */,
+				D43ACD801738B47B00E6A571 /* DOUAudioPlaybackItem.m */,
+				D43ACD831738B47B00E6A571 /* DOUAudioStreamer.h */,
+				D43ACD841738B47B00E6A571 /* DOUAudioStreamer.m */,
+			);
+			name = Readed;
+			sourceTree = "<group>";
+		};
+		D43ACD731738B47B00E6A571 /* DOUAudioStreamer */ = {
+			isa = PBXGroup;
+			children = (
+				096F5AA01EE8E4EC0091C734 /* Readed */,
 				D43ACD741738B47B00E6A571 /* DOUAudioDecoder.h */,
 				D43ACD751738B47B00E6A571 /* DOUAudioDecoder.m */,
 				D43ACD761738B47B00E6A571 /* DOUAudioEventLoop.h */,
 				D43ACD771738B47B00E6A571 /* DOUAudioEventLoop.m */,
-				D43ACD781738B47B00E6A571 /* DOUAudioFile.h */,
-				D43ACD791738B47B00E6A571 /* DOUAudioFilePreprocessor.h */,
-				D43ACD7A1738B47B00E6A571 /* DOUAudioFilePreprocessor.m */,
 				D43ACD7B1738B47B00E6A571 /* DOUAudioFileProvider.h */,
 				D43ACD7C1738B47B00E6A571 /* DOUAudioFileProvider.m */,
-				D43ACD7D1738B47B00E6A571 /* DOUAudioLPCM.h */,
-				D43ACD7E1738B47B00E6A571 /* DOUAudioLPCM.m */,
-				D43ACD7F1738B47B00E6A571 /* DOUAudioPlaybackItem.h */,
-				D43ACD801738B47B00E6A571 /* DOUAudioPlaybackItem.m */,
 				D43ACD811738B47B00E6A571 /* DOUAudioRenderer.h */,
 				D43ACD821738B47B00E6A571 /* DOUAudioRenderer.m */,
-				D43ACD831738B47B00E6A571 /* DOUAudioStreamer.h */,
-				D43ACD841738B47B00E6A571 /* DOUAudioStreamer.m */,
 				D43ACD851738B47B00E6A571 /* DOUAudioStreamer_Private.h */,
 				D40A4D1517AB83C400D0305F /* DOUAudioStreamer+Options.h */,
 				D40A4D1617AB83C400D0305F /* DOUAudioStreamer+Options.m */,
@@ -243,6 +255,9 @@
 				D4F5B29218A5F3030063865C /* MainViewController.m */,
 				D4F5B29418A5F6B90063865C /* PlayerViewController.h */,
 				D4F5B29518A5F6B90063865C /* PlayerViewController.m */,
+				096F5AA11EE8FBA50091C734 /* SOLog.h */,
+				096F5AA21EE8FC2D0091C734 /* SOAudio.h */,
+				096F5AA31EE8FC2D0091C734 /* SOAudio.m */,
 				D4C38929171B9D87009D6124 /* Supporting Files */,
 			);
 			path = DOUASDemo;
@@ -347,6 +362,7 @@
 				D40A255D17694680000B98AA /* DOUAudioAnalyzer+Default.m in Sources */,
 				D43ACD8D1738B47B00E6A571 /* DOUAudioFileProvider.m in Sources */,
 				D4F5B29618A5F6B90063865C /* PlayerViewController.m in Sources */,
+				096F5AA41EE8FC2D0091C734 /* SOAudio.m in Sources */,
 				D43ACD8E1738B47B00E6A571 /* DOUAudioLPCM.m in Sources */,
 				D43ACD8F1738B47B00E6A571 /* DOUAudioPlaybackItem.m in Sources */,
 				D43ACD901738B47B00E6A571 /* DOUAudioRenderer.m in Sources */,

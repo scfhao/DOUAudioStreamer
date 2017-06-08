@@ -308,7 +308,7 @@ static OSStatus decoder_data_proc(AudioConverterRef inAudioConverter, UInt32 *io
   if (*ioNumberDataPackets > afio->numPacketsPerRead) {
     *ioNumberDataPackets = afio->numPacketsPerRead;
   }
-
+    SOVerboseLog(@"转换回调pkg.num: %i", *ioNumberDataPackets);
   UInt32 outNumBytes;
   OSStatus status = AudioFileReadPackets(afio->afid, FALSE, &outNumBytes, afio->pktDescs, afio->pos, ioNumberDataPackets, afio->srcBuffer);
   if (status != noErr) {
@@ -365,7 +365,10 @@ static OSStatus decoder_data_proc(AudioConverterRef inAudioConverter, UInt32 *io
         downloadTime > intervalPerRead)) {
       pthread_mutex_unlock(&_decodingContext.mutex);
       return DOUAudioDecoderWaiting;
-    }
+        }
+//    else {
+//            SODebugLog(@"");
+//        }
   }
 
   AudioBufferList fillBufList;
@@ -377,12 +380,13 @@ static OSStatus decoder_data_proc(AudioConverterRef inAudioConverter, UInt32 *io
   OSStatus status;
 
   UInt32 ioOutputDataPackets = _decodingContext.numOutputPackets;
+    SOVerboseLog(@"out convert: %i", _decodingContext.afio.numPacketsPerRead);
   status = AudioConverterFillComplexBuffer(_audioConverter, decoder_data_proc, &_decodingContext.afio, &ioOutputDataPackets, &fillBufList, _decodingContext.outputPktDescs);
   if (status != noErr) {
     pthread_mutex_unlock(&_decodingContext.mutex);
     return DOUAudioDecoderFailed;
   }
-
+    SOVerboseLog(@"ioOutputDataPackets: %i", ioOutputDataPackets);
   if (ioOutputDataPackets == 0) {
     [_lpcm setEnd:YES];
     pthread_mutex_unlock(&_decodingContext.mutex);

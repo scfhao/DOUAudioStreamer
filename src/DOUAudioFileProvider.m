@@ -386,6 +386,7 @@ static BOOL gLastProviderIsFinished = NO;
 {
   if (propertyID == kAudioFileStreamProperty_ReadyToProducePackets) {
     _readyToProducePackets = YES;
+      NSLog(@"readyToProducePackets");
   }
 }
 
