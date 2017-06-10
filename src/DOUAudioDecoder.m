@@ -105,6 +105,7 @@ typedef struct {
   if (self) {
     _playbackItem = playbackItem;
     _bufferSize = bufferSize;
+      SOVerboseLog(@"bufferSize:%li", bufferSize);
     _lpcm = [[DOUAudioLPCM alloc] init];
 
     _outputFormat = [[self class] defaultOutputFormat];
@@ -308,9 +309,10 @@ static OSStatus decoder_data_proc(AudioConverterRef inAudioConverter, UInt32 *io
   if (*ioNumberDataPackets > afio->numPacketsPerRead) {
     *ioNumberDataPackets = afio->numPacketsPerRead;
   }
-    SOVerboseLog(@"转换回调pkg.num: %i", *ioNumberDataPackets);
   UInt32 outNumBytes;
+    
   OSStatus status = AudioFileReadPackets(afio->afid, FALSE, &outNumBytes, afio->pktDescs, afio->pos, ioNumberDataPackets, afio->srcBuffer);
+    SOVerboseLog(@"readPackage:%li, pkg.num: %i, bytes.num: %i", afio->pos, *ioNumberDataPackets, outNumBytes);
   if (status != noErr) {
     return status;
   }
@@ -345,8 +347,9 @@ static OSStatus decoder_data_proc(AudioConverterRef inAudioConverter, UInt32 *io
   if (![provider isFinished]) {
     NSUInteger dataOffset = [_playbackItem dataOffset];
     NSUInteger expectedDataLength = [provider expectedLength];
+    // 收到的音频数据长度
     NSInteger receivedDataLength  = (NSInteger)([provider receivedLength] - dataOffset);
-
+    //
     SInt64 packetNumber = _decodingContext.afio.pos + _decodingContext.afio.numPacketsPerRead;
     SInt64 packetDataOffset = packetNumber * _decodingContext.afio.srcSizePerPacket;
 
@@ -366,9 +369,9 @@ static OSStatus decoder_data_proc(AudioConverterRef inAudioConverter, UInt32 *io
       pthread_mutex_unlock(&_decodingContext.mutex);
       return DOUAudioDecoderWaiting;
         }
-//    else {
-//            SODebugLog(@"");
-//        }
+    else {
+            SODebugLog(@"\nreceivedDataLength: %li\npacketDataOffset: %lli\nbytesRemaining: %lli\ndownloadTime: %.0f\nintervalPerRead: %.0f", receivedDataLength, packetDataOffset, bytesRemaining, downloadTime, intervalPerRead);
+        }
   }
 
   AudioBufferList fillBufList;

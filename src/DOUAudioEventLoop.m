@@ -124,9 +124,11 @@ typedef NS_ENUM(uint64_t, event_type) {
   pthread_mutex_destroy(&_mutex);
 }
 
+/// 缓存大小
 + (NSUInteger)_decoderBufferSize
 {
   AudioStreamBasicDescription format = [DOUAudioDecoder defaultOutputFormat];
+  // 缓存时间 * 采样率 * 每帧通道数 * 每通道字节数
   return kDOUAudioStreamerBufferTime * format.mSampleRate * format.mChannelsPerFrame * format.mBitsPerChannel / 8 / 1000;
 }
 

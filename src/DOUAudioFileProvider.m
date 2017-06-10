@@ -252,6 +252,7 @@ static BOOL gLastProviderIsFinished = NO;
   else {
     _requestCompleted = YES;
     [_mappedData dou_synchronizeMappedFile];
+      SOVerboseLog(@"network OK");
   }
 
   if (!_failed &&
@@ -305,7 +306,7 @@ static BOOL gLastProviderIsFinished = NO;
   if (_mappedData == nil) {
     return;
   }
-
+    SOVerboseLog(@"network receive data");
   NSUInteger availableSpace = _expectedLength - _receivedLength;
   NSUInteger bytesToWrite = MIN(availableSpace, [data length]);
 

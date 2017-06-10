@@ -256,7 +256,6 @@ static CFRunLoopRef controller_get_runloop()
   if (string == nil) {
     return;
   }
-
   _responseContentLength = (NSUInteger)[string integerValue];
 }
 
