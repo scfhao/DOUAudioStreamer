@@ -43,22 +43,23 @@ typedef struct {
   void *srcBuffer;							// 每次从音频文件中读取数据的缓冲区
   UInt32 srcBufferSize;						// 缓冲区大小
   AudioStreamBasicDescription srcFormat;	// 原始格式
-  UInt32 srcSizePerPacket;
-  UInt32 numPacketsPerRead;
-  AudioStreamPacketDescription *pktDescs;
+  UInt32 srcSizePerPacket;          // mBytesPerPacket（或者音频文件中包的最大大小）
+  UInt32 numPacketsPerRead;         // 需要缓冲的包数
+  AudioStreamPacketDescription *pktDescs;   缓冲的包信息数组
 } AudioFileIO;
 
 typedef struct {
-  AudioStreamBasicDescription inputFormat;			// 源格式
-  AudioStreamBasicDescription outputFormat;			// 目标格式（lpcm）
+  AudioStreamBasicDescription inputFormat;			// 从转换器中获取的源格式
+  AudioStreamBasicDescription outputFormat;			// 从转换器中获取的目标格式（lpcm）
 
   AudioFileIO afio;									// 音频文件信息
 
-  SInt64 decodeValidFrames;
+  SInt64 decodeValidFrames;         // 对于输入格式中mBitsPerChannel为0的音频会有此属性，代表音频文件中可用帧数量
+
   AudioStreamPacketDescription *outputPktDescs;
 
-  UInt32 outputBufferSize;
-  void *outputBuffer;
+  UInt32 outputBufferSize;          // 输出缓冲区大小，和输入缓存区大小相等
+  void *outputBuffer;               // 输出缓冲区
 
   UInt32 numOutputPackets;
   SInt64 outputPos;

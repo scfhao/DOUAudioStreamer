@@ -212,7 +212,12 @@ static BOOL gLastProviderIsFinished = NO;
   [self _closeAudioFileStream];
 
   if ([DOUAudioStreamer options] & DOUAudioStreamerRemoveCacheOnDeallocation) {
-    [[NSFileManager defaultManager] removeItemAtPath:_cachedPath error:NULL];
+    BOOL ok = [[NSFileManager defaultManager] removeItemAtPath:_cachedPath error:NULL];
+      if (ok) {
+          SOVerboseLog(@"delete cached file");
+      } else {
+          SOVerboseLog(@"delete cached file error");
+      }
   }
 }
 
@@ -251,8 +256,9 @@ static BOOL gLastProviderIsFinished = NO;
   }
   else {
     _requestCompleted = YES;
+      SOVerboseLog(@"network OK %@", _audioFileURL);
     [_mappedData dou_synchronizeMappedFile];
-      SOVerboseLog(@"network OK");
+      
   }
 
   if (!_failed &&
@@ -356,6 +362,11 @@ static BOOL gLastProviderIsFinished = NO;
       _requiresCompleteFile = YES;
     }
   }
+}
+
+- (void)setRequiresCompleteFile {
+    SOVerboseLog(@"要求下载完整音频文件");
+    _requiresCompleteFile = YES;
 }
 
 - (void)_createRequest
@@ -526,6 +537,7 @@ static void audio_file_stream_packets_proc(void *inClientData,
 - (BOOL)isReady
 {
   if (!_requiresCompleteFile) {
+      NSLog(@"=====");
     return _readyToProducePackets;
   }
 
@@ -754,6 +766,10 @@ static void audio_file_stream_packets_proc(void *inClientData,
 {
   [self doesNotRecognizeSelector:_cmd];
   return NO;
+}
+
+- (void)setRequiresCompleteFile {
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 @end

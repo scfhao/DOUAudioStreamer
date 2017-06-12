@@ -105,7 +105,7 @@ typedef struct {
   if (self) {
     _playbackItem = playbackItem;
     _bufferSize = bufferSize;
-      SOVerboseLog(@"bufferSize:%li", bufferSize);
+      SOVerboseLog(@"bufferSize:%li, bitRate:%lu", bufferSize, (unsigned long)playbackItem.bitRate);
     _lpcm = [[DOUAudioLPCM alloc] init];
 
     _outputFormat = [[self class] defaultOutputFormat];
@@ -203,6 +203,7 @@ typedef struct {
     actualToBaseSampleRateRatio = _decodingContext.inputFormat.mSampleRate / baseFormat.mSampleRate;
   }
 
+  // 对于输入采样率不是 44100 的音频，这个值将不是 1
   double srcRatio = 1.0;
   if (_decodingContext.outputFormat.mSampleRate != 0.0 &&
       _decodingContext.inputFormat.mSampleRate != 0.0) {
@@ -210,6 +211,7 @@ typedef struct {
   }
 
   _decodingContext.decodeValidFrames = 0;
+  // 包含了音频文件中可用帧的数量及其起始和结束位置
   AudioFilePacketTableInfo srcPti;
   if (_decodingContext.inputFormat.mBitsPerChannel == 0) {
     size = sizeof(srcPti);
@@ -241,7 +243,8 @@ typedef struct {
       free(_decodingContext.afio.srcBuffer);
       return NO;
     }
-
+      SOVerboseLog(@"packet size: %i", _decodingContext.afio.srcSizePerPacket);
+//      _decodingContext.afio.srcSizePerPacket = 2304;
     _decodingContext.afio.numPacketsPerRead = _decodingContext.afio.srcBufferSize / _decodingContext.afio.srcSizePerPacket;
     _decodingContext.afio.pktDescs = (AudioStreamPacketDescription *)malloc(sizeof(AudioStreamPacketDescription) * _decodingContext.afio.numPacketsPerRead);
   }
@@ -312,7 +315,7 @@ static OSStatus decoder_data_proc(AudioConverterRef inAudioConverter, UInt32 *io
   UInt32 outNumBytes;
     
   OSStatus status = AudioFileReadPackets(afio->afid, FALSE, &outNumBytes, afio->pktDescs, afio->pos, ioNumberDataPackets, afio->srcBuffer);
-    SOVerboseLog(@"readPackage:%li, pkg.num: %i, bytes.num: %i", afio->pos, *ioNumberDataPackets, outNumBytes);
+    SOVerboseLog(@"readPackage:%lli, pkg.num: %i, bytes.num: %i", afio->pos, *ioNumberDataPackets, outNumBytes);
   if (status != noErr) {
     return status;
   }
@@ -335,7 +338,7 @@ static OSStatus decoder_data_proc(AudioConverterRef inAudioConverter, UInt32 *io
   if (!_decodingContextInitialized) {
     return DOUAudioDecoderFailed;
   }
-
+    SOVerboseLog(@"decodeOnce------------");
   pthread_mutex_lock(&_decodingContext.mutex);
 
   DOUAudioFileProvider *provider = [_playbackItem fileProvider];
@@ -349,24 +352,29 @@ static OSStatus decoder_data_proc(AudioConverterRef inAudioConverter, UInt32 *io
     NSUInteger expectedDataLength = [provider expectedLength];
     // 收到的音频数据长度
     NSInteger receivedDataLength  = (NSInteger)([provider receivedLength] - dataOffset);
-    //
     SInt64 packetNumber = _decodingContext.afio.pos + _decodingContext.afio.numPacketsPerRead;
+    // 要读到这个偏移
     SInt64 packetDataOffset = packetNumber * _decodingContext.afio.srcSizePerPacket;
 
     SInt64 bytesPerPacket = _decodingContext.afio.srcSizePerPacket;
     SInt64 bytesPerRead = bytesPerPacket * _decodingContext.afio.numPacketsPerRead;
 
     SInt64 framesPerPacket = _decodingContext.inputFormat.mFramesPerPacket;
+    // 播放一个包需要的毫秒数
     double intervalPerPacket = 1000.0 / _decodingContext.inputFormat.mSampleRate * framesPerPacket;
+    // 播放一个缓冲区需要的毫秒数
     double intervalPerRead = intervalPerPacket / bytesPerPacket * bytesPerRead;
 
     double downloadTime = 1000.0 * (bytesPerRead - (receivedDataLength - packetDataOffset)) / [provider downloadSpeed];
-    SInt64 bytesRemaining = (SInt64)(expectedDataLength - (NSUInteger)receivedDataLength);
+      
+//    SInt64 bytesRemaining = (SInt64)(expectedDataLength - (NSUInteger)receivedDataLength);
+    SInt64 bytesRemaining = (SInt64)(expectedDataLength - [provider receivedLength]);
 
     if (receivedDataLength < packetDataOffset ||
         (bytesRemaining > 0 &&
         downloadTime > intervalPerRead)) {
       pthread_mutex_unlock(&_decodingContext.mutex);
+            SOVerboseLog(@"缓冲中。。。");
       return DOUAudioDecoderWaiting;
         }
     else {

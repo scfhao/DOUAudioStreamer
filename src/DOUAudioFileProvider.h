@@ -44,4 +44,6 @@ typedef void (^DOUAudioFileProviderEventBlock)(void);
 @property (nonatomic, readonly, getter=isReady) BOOL ready;
 @property (nonatomic, readonly, getter=isFinished) BOOL finished;
 
+- (void)setRequiresCompleteFile;
+
 @end

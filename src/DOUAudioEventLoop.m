@@ -437,12 +437,10 @@ static void audio_route_change_listener(void *inClientData,
     [streamer setStatus:DOUAudioStreamerError];
     return;
   }
-
-  if (![[streamer fileProvider] isReady]) {
-    [streamer setStatus:DOUAudioStreamerBuffering];
-    return;
-  }
-
+    if (![[streamer fileProvider] isReady]) {
+        [streamer setStatus:DOUAudioStreamerBuffering];
+        return;
+    }
   if ([streamer playbackItem] == nil) {
     [streamer setPlaybackItem:[DOUAudioPlaybackItem playbackItemWithFileProvider:[streamer fileProvider]]];
     if (![[streamer playbackItem] open]) {
@@ -467,7 +465,11 @@ static void audio_route_change_listener(void *inClientData,
       return;
     }
   }
-
+    if (![[streamer fileProvider] isReady]) {
+        [streamer setStatus:DOUAudioStreamerBuffering];
+        return;
+    }
+    
   switch ([[streamer decoder] decodeOnce]) {
   case DOUAudioDecoderSucceeded:
     break;

@@ -244,6 +244,9 @@ static SInt64 audio_file_get_size(void *inClientData)
 
   if (numFormats == 1) {
     _fileFormat = formatList[0].mASBD;
+      if (_fileFormat.mSampleRate == 8000) {
+          [_fileProvider setRequiresCompleteFile];
+      }
       SOVerboseLog(@"获取到文件类型:%@", NSStringFromAudioStreamBasicDescription(_fileFormat));
   }
   else {
@@ -307,7 +310,6 @@ static SInt64 audio_file_get_size(void *inClientData)
     return NO;
   }
   _bitRate = bitRate;
-    SOVerboseLog(@"bitRate:%lu", (unsigned long)_bitRate);
 
   SInt64 dataOffset = 0;
   size = sizeof(dataOffset);
