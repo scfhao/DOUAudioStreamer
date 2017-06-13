@@ -162,6 +162,8 @@
 				D43ACD801738B47B00E6A571 /* DOUAudioPlaybackItem.m */,
 				D43ACD831738B47B00E6A571 /* DOUAudioStreamer.h */,
 				D43ACD841738B47B00E6A571 /* DOUAudioStreamer.m */,
+				D43ACD7B1738B47B00E6A571 /* DOUAudioFileProvider.h */,
+				D43ACD7C1738B47B00E6A571 /* DOUAudioFileProvider.m */,
 			);
 			name = Readed;
 			sourceTree = "<group>";
@@ -174,8 +176,6 @@
 				D43ACD751738B47B00E6A571 /* DOUAudioDecoder.m */,
 				D43ACD761738B47B00E6A571 /* DOUAudioEventLoop.h */,
 				D43ACD771738B47B00E6A571 /* DOUAudioEventLoop.m */,
-				D43ACD7B1738B47B00E6A571 /* DOUAudioFileProvider.h */,
-				D43ACD7C1738B47B00E6A571 /* DOUAudioFileProvider.m */,
 				D43ACD811738B47B00E6A571 /* DOUAudioRenderer.h */,
 				D43ACD821738B47B00E6A571 /* DOUAudioRenderer.m */,
 				D43ACD851738B47B00E6A571 /* DOUAudioStreamer_Private.h */,

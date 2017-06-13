@@ -144,7 +144,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [_streamer play];
         
         [self _updateBufferingStatus];
-        [self _setupHintForStreamer];
+//        [self _setupHintForStreamer];
     }
 }
 

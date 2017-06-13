@@ -398,8 +398,68 @@ static BOOL gLastProviderIsFinished = NO;
 {
   if (propertyID == kAudioFileStreamProperty_ReadyToProducePackets) {
     _readyToProducePackets = YES;
-      NSLog(@"readyToProducePackets");
   }
+    switch (propertyID) {
+        case kAudioFileStreamProperty_ReadyToProducePackets:
+            SOVerboseLog(@"AudioFileStreamProperty_ReadyToProducePackets");
+            break;
+        case kAudioFileStreamProperty_FileFormat:
+            SOVerboseLog(@"AudioFileStreamProperty_FileFormat");
+            break;
+        case kAudioFileStreamProperty_DataFormat:
+            SOVerboseLog(@"AudioFileStreamProperty_DataFormat");
+            break;
+        case kAudioFileStreamProperty_FormatList:
+            SOVerboseLog(@"AudioFileStreamProperty_FormatList");
+            break;
+        case kAudioFileStreamProperty_MagicCookieData:
+            SOVerboseLog(@"AudioFileStreamProperty_MagicCookieData");
+            break;
+        case kAudioFileStreamProperty_AudioDataByteCount:
+            SOVerboseLog(@"AudioFileStreamProperty_AudioDataByteCount");
+            break;
+        case kAudioFileStreamProperty_AudioDataPacketCount:
+            SOVerboseLog(@"AudioFileStreamProperty_AudioDataPacketCount");
+            break;
+        case kAudioFileStreamProperty_MaximumPacketSize:
+            SOVerboseLog(@"AudioFileStreamProperty_MaximumPacketSize");
+            break;
+        case kAudioFileStreamProperty_DataOffset:
+            SOVerboseLog(@"AudioFileStreamProperty_DataOffset");
+            break;
+        case kAudioFileStreamProperty_ChannelLayout:
+            SOVerboseLog(@"AudioFileStreamProperty_ChannelLayout");
+            break;
+        case kAudioFileStreamProperty_PacketToFrame:
+            SOVerboseLog(@"AudioFileStreamProperty_PacketToFrame");
+            break;
+        case kAudioFileStreamProperty_FrameToPacket:
+            SOVerboseLog(@"AudioFileStreamProperty_FrameToPacket");
+            break;
+        case kAudioFileStreamProperty_PacketToByte:
+            SOVerboseLog(@"AudioFileStreamProperty_PacketToByte");
+            break;
+        case kAudioFileStreamProperty_ByteToPacket:
+            SOVerboseLog(@"AudioFileStreamProperty_ByteToPacket");
+            break;
+        case kAudioFileStreamProperty_PacketTableInfo:
+            SOVerboseLog(@"AudioFileStreamProperty_PacketTableInfo");
+            break;
+        case kAudioFileStreamProperty_PacketSizeUpperBound:
+            SOVerboseLog(@"AudioFileStreamProperty_PacketSizeUpperBound");
+            break;
+        case kAudioFileStreamProperty_AverageBytesPerPacket:
+            SOVerboseLog(@"AudioFileStreamProperty_AverageBytesPerPacket");
+            break;
+        case kAudioFileStreamProperty_BitRate:
+            SOVerboseLog(@"AudioFileStreamProperty_BitRate");
+            break;
+        case kAudioFileStreamProperty_InfoDictionary:
+            SOVerboseLog(@"AudioFileStreamProperty_InfoDictionary");
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)_handleAudioFileStreamPackets:(const void *)packets
@@ -769,7 +829,7 @@ static void audio_file_stream_packets_proc(void *inClientData,
 }
 
 - (void)setRequiresCompleteFile {
-    [self doesNotRecognizeSelector:_cmd];
+
 }
 
 @end
